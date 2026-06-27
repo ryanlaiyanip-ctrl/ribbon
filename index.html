@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ribbon.ai — Automotive ICP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:         #0C0C14;
+    --surface:    #16161F;
+    --border:     #2A2A38;
+    --purple:     #7C5CFC;
+    --purple-lt:  #A48EFD;
+    --text:       #FFFFFF;
+    --secondary:  #9090A8;
+    --muted:      #55556A;
+    --green:      #22C55E;
+    --gap-section: 52px;
+    --pad-x: 20px;
+  }
+
+  html, body {
+    background: #06060E;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Phone shell ── */
+  #shell {
+    max-width: 390px;
+    width: 100%;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    box-shadow: 0 0 80px rgba(124, 92, 252, 0.15);
+    padding-bottom: 0;
+  }
+
+  /* ── Shared utils ── */
+  .section-gap { margin-top: var(--gap-section); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--secondary);
+    border-left: 3px solid var(--purple);
+    padding-left: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* ── Ribbon logo mark ── */
+  .ribbon-logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+  }
+  .ribbon-logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  /* ── HEADER ── */
+  #header {
+    padding: 20px var(--pad-x) 0;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .header-divider {
+    height: 1px;
+    background: var(--border);
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: border-color 200ms ease;
+  }
+  .card:hover { border-color: var(--purple); }
+
+  .stat-num {
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--secondary);
+    line-height: 1.4;
+  }
+
+  /* ── SECTION 1 ── */
+  #section-1 {
+    padding: 0 var(--pad-x);
+  }
+
+  .stats-2col {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stats-2col .card { flex: 1; }
+
+  .stats-3col {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .stats-3col .card { flex: 1; padding: 14px 12px; }
+  .stats-3col .stat-num { font-size: 26px; }
+
+  .body-text {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .callout-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    margin-top: 24px;
+    line-height: 1.5;
+  }
+
+  .sources {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* ── SECTION 2 ── */
+  #section-2 {
+    padding: 0 var(--pad-x);
+  }
+
+  .section-icon {
+    display: block;
+    margin: 0 auto 24px;
+  }
+
+  .icp-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 16px;
+    align-items: start;
+  }
+
+  .icp-key {
+    font-size: 14px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .icp-val {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* ── SECTION 3 ── */
+  #section-3 {
+    padding: 0 var(--pad-x);
+  }
+
+  .pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .pill {
+    background: #1E1E2E;
+    border: 1px solid var(--purple);
+    color: var(--purple-lt);
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .body-text-sm {
+    font-size: 14px;
+    color: var(--secondary);
+    line-height: 1.75;
+  }
+
+  /* ── SECTION 4 & 6 ACCORDIONS ── */
+  .accordion-list { }
+
+  .accordion-item {
+    border-top: 1px solid var(--border);
+  }
+
+  .accordion-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+    text-align: left;
+    gap: 12px;
+  }
+
+  .accordion-trigger-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .accordion-title {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .accordion-icon {
+    font-size: 18px;
+    color: var(--purple);
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 200ms ease;
+    display: inline-block;
+  }
+
+  .accordion-item.open .accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 250ms ease;
+  }
+
+  .accordion-item.open .accordion-body {
+    max-height: 500px;
+  }
+
+  .accordion-body-inner {
+    font-size: 14px;
+    color: var(--secondary);
+    line-height: 1.65;
+    padding: 0 16px 16px 0;
+  }
+
+  /* competitor logos */
+  .comp-logo {
+    height: 22px;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .win-line {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--purple-lt);
+    border-left: 3px solid var(--purple);
+    padding-left: 8px;
+    line-height: 1.55;
+  }
+
+  /* ── SECTION 5 ── */
+  #section-5 {
+    padding: 0 var(--pad-x);
+  }
+
+  .metric-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .metric-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--green);
+  }
+
+  /* ── SECTION 6 ── */
+  #section-6 {
+    padding: 0 var(--pad-x);
+  }
+
+  /* ── FOOTER ── */
+  #footer {
+    padding: 0 var(--pad-x) 24px;
+    margin-top: 32px;
+  }
+
+  .footer-logo-wrap {
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .footer-text {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  /* section wrappers with padding */
+  .section-wrap {
+    padding: 0 var(--pad-x);
+  }
+</style>
+</head>
+<body>
+<div id="shell">
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <div id="header">
+    <div class="header-row">
+      <div class="ribbon-logo">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="17" cy="16" r="14" fill="#7C5CFC"/>
+          <ellipse cx="27" cy="28" rx="11" ry="10" fill="#4F28C9"/>
+        </svg>
+        <span class="ribbon-logo-text" style="font-size:19px;">Ribbon</span>
+      </div>
+      <span class="header-label">GTM Deliverable Automotive ICP</span>
+    </div>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- ═══════════ SECTION 1 — THE PROBLEM ═══════════ -->
+  <div id="section-1">
+    <p class="section-label">The Problem</p>
+
+    <div class="stats-2col">
+      <div class="card">
+        <div class="stat-num">46%</div>
+        <div class="stat-label">Overall dealership turnover</div>
+      </div>
+      <div class="card">
+        <div class="stat-num">$33K</div>
+        <div class="stat-label">Cost to replace each employee</div>
+      </div>
+    </div>
+
+    <p class="body-text">
+      Dealership turnover sits at 46%, nearly double the national average.
+      Every seat that opens costs $33,000 to refill — and the same seats
+      keep opening.
+    </p>
+
+    <div class="stats-3col">
+      <div class="card">
+        <div class="stat-num">10 days</div>
+        <div class="stat-label">Before top candidates are gone</div>
+      </div>
+      <div class="card">
+        <div class="stat-num">80</div>
+        <div class="stat-label">Applications per role</div>
+      </div>
+      <div class="card">
+        <div class="stat-num">5x</div>
+        <div class="stat-label">Companies applied to at once</div>
+      </div>
+    </div>
+
+    <p class="body-text">
+      Top candidates are off the market in 10 days. The average role pulls
+      80 applications. Most candidates apply to 5 places at once and take
+      the first offer back.
+    </p>
+
+    <p class="callout-text">
+      "The bottleneck is not finding applicants. It is screening them fast
+      enough to win them."
+    </p>
+
+    <p class="sources">
+      Sources: netchex.com, selectsoftwarereviews.com, ziprecruiter.com
+    </p>
+  </div>
+
+  <!-- divider -->
+  <div class="section-gap"></div>
+  <div class="divider" style="margin: 0 20px;"></div>
+  <div class="section-gap"></div>
+
+  <!-- ═══════════ SECTION 2 — WHO WE ARE TARGETING ═══════════ -->
+  <div id="section-2">
+    <p class="section-label">Who We Are Targeting</p>
+
+    <!-- Dealership building icon -->
+    <svg class="section-icon" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Ground line -->
+      <rect x="2" y="62" width="68" height="2" rx="1" fill="#4A4A6A"/>
+      <!-- Building body -->
+      <rect x="5" y="30" width="62" height="32" fill="#3A3A55" rx="2"/>
+      <!-- Flat roof / canopy -->
+      <rect x="2" y="24" width="68" height="8" fill="#4F4F72" rx="2"/>
+      <!-- Canopy underside highlight -->
+      <rect x="2" y="30" width="68" height="2" fill="#7C5CFC" opacity="0.7"/>
+      <!-- Showroom windows - 3 large panes -->
+      <rect x="8" y="35" width="16" height="18" rx="1" fill="#1A1A3A"/>
+      <rect x="28" y="35" width="16" height="18" rx="1" fill="#1A1A3A"/>
+      <rect x="48" y="35" width="16" height="18" rx="1" fill="#1A1A3A"/>
+      <!-- Window shine lines -->
+      <line x1="10" y1="36" x2="10" y2="52" stroke="#7C5CFC" stroke-width="1" opacity="0.4"/>
+      <line x1="30" y1="36" x2="30" y2="52" stroke="#7C5CFC" stroke-width="1" opacity="0.4"/>
+      <line x1="50" y1="36" x2="50" y2="52" stroke="#7C5CFC" stroke-width="1" opacity="0.4"/>
+      <!-- Door -->
+      <rect x="30" y="46" width="12" height="16" rx="1" fill="#12122A"/>
+      <circle cx="39" cy="54" r="1" fill="#7C5CFC"/>
+      <!-- Sign panel on canopy -->
+      <rect x="14" y="26" width="44" height="5" rx="1" fill="#7C5CFC" opacity="0.25"/>
+      <!-- Flagpole -->
+      <rect x="63" y="10" width="1.5" height="20" fill="#4A4A6A"/>
+      <polygon points="64.5,10 72,13 64.5,16" fill="#7C5CFC" opacity="0.8"/>
+    </svg>
+
+    <div class="icp-grid">
+      <span class="icp-key">Type:</span>
+      <span class="icp-val">Independent dealerships and dealer groups</span>
+
+      <span class="icp-key">Geography:</span>
+      <span class="icp-val">US and Canada</span>
+
+      <span class="icp-key">Employees:</span>
+      <span class="icp-val">20 to 500</span>
+
+      <span class="icp-key">Locations:</span>
+      <span class="icp-val">1 to 15</span>
+
+      <span class="icp-key">HR team:</span>
+      <span class="icp-val">Zero to one. GM or office manager handles hiring.</span>
+
+      <span class="icp-key">Decision maker:</span>
+      <span class="icp-val">GM, Office Manager, Dealer Principal</span>
+    </div>
+  </div>
+
+  <!-- divider -->
+  <div class="section-gap"></div>
+  <div class="divider" style="margin: 0 20px;"></div>
+  <div class="section-gap"></div>
+
+  <!-- ═══════════ SECTION 3 — ROLES BEING HIRED FOR ═══════════ -->
+  <div id="section-3">
+    <p class="section-label">Roles Being Hired For</p>
+
+    <!-- Car icon -->
+    <svg class="section-icon" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Ground shadow -->
+      <ellipse cx="36" cy="63" rx="28" ry="3" fill="#1A1A2E"/>
+      <!-- Car body lower -->
+      <rect x="5" y="36" width="62" height="18" rx="5" fill="#4A4A6A"/>
+      <!-- Car cabin -->
+      <path d="M19 36 L25 18 L47 18 L53 36 Z" fill="#5A5A7A"/>
+      <!-- Windshield -->
+      <path d="M23 36 L28 21 L44 21 L49 36 Z" fill="#1A1A3A"/>
+      <!-- Windshield glare -->
+      <line x1="29" y1="22" x2="26" y2="35" stroke="white" stroke-width="1" opacity="0.15"/>
+      <!-- Side window -->
+      <path d="M19 36 L25 21 L28 21 L23 36 Z" fill="#1A1A3A"/>
+      <path d="M49 36 L44 21 L47 21 L53 36 Z" fill="#1A1A3A"/>
+      <!-- Body accent stripe -->
+      <rect x="5" y="44" width="62" height="2" fill="#7C5CFC" opacity="0.4" rx="1"/>
+      <!-- Wheel arch left -->
+      <circle cx="18" cy="54" r="10" fill="#2A2A3E"/>
+      <!-- Wheel left -->
+      <circle cx="18" cy="54" r="8" fill="#1A1A2E"/>
+      <circle cx="18" cy="54" r="4" fill="#3A3A55"/>
+      <circle cx="18" cy="54" r="1.5" fill="#7C5CFC"/>
+      <!-- Wheel arch right -->
+      <circle cx="54" cy="54" r="10" fill="#2A2A3E"/>
+      <!-- Wheel right -->
+      <circle cx="54" cy="54" r="8" fill="#1A1A2E"/>
+      <circle cx="54" cy="54" r="4" fill="#3A3A55"/>
+      <circle cx="54" cy="54" r="1.5" fill="#7C5CFC"/>
+      <!-- Headlights -->
+      <rect x="6" y="38" width="10" height="5" rx="2" fill="#7C5CFC"/>
+      <rect x="6" y="38" width="10" height="5" rx="2" fill="white" opacity="0.3"/>
+      <!-- Tail lights -->
+      <rect x="56" y="38" width="10" height="5" rx="2" fill="#A48EFD" opacity="0.9"/>
+      <!-- Front bumper -->
+      <rect x="5" y="48" width="8" height="6" rx="2" fill="#5A5A7A"/>
+      <!-- Rear bumper -->
+      <rect x="59" y="48" width="8" height="6" rx="2" fill="#5A5A7A"/>
+    </svg>
+
+    <div class="pills-row">
+      <span class="pill">BDC Rep</span>
+      <span class="pill">Lot Attendant</span>
+      <span class="pill">Receptionist</span>
+      <span class="pill">Detailer</span>
+      <span class="pill">Service Porter</span>
+    </div>
+
+    <p class="body-text-sm">
+      No technical certifications required. Pure behavioural screening.
+      Same seats refilling constantly.
+    </p>
+  </div>
+
+  <!-- divider -->
+  <div class="section-gap"></div>
+  <div class="divider" style="margin: 0 20px;"></div>
+  <div class="section-gap"></div>
+
+  <!-- ═══════════ SECTION 4 — WHY IT HURTS ═══════════ -->
+  <div id="section-4" class="section-wrap">
+    <p class="section-label">Why It Hurts</p>
+
+    <div class="accordion-list" data-group="pain">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <span class="accordion-title">Speed</span>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            A BDC rep or lot attendant applies to 5 dealerships at once and
+            takes the first call back. Most GMs get to applications days later.
+            The candidate is already gone.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <span class="accordion-title">Capacity</span>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            212 applications per role land in an inbox. One person has to call
+            them while also managing the floor, handling customer escalations,
+            and running payroll. Most applicants never get a call.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <span class="accordion-title">Quality</span>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            No structured process means the GM asks different questions every
+            time, scores nobody, and makes gut decisions. Bad hires stay 90 days
+            and leave. The seat opens again.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <span class="accordion-title">Reach</span>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            BDC reps and lot attendants work somewhere already. They apply on
+            their lunch break. They cannot take a screening call at 2pm on a
+            Tuesday. Dealerships that only screen during business hours miss
+            them entirely.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <span class="accordion-title">Integrity</span>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            Phone screens are unrecorded and unscored. Candidates misrepresent
+            availability, experience, and reliability. There is no way to catch
+            it until day one.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- divider -->
+  <div class="section-gap"></div>
+  <div class="divider" style="margin: 0 20px;"></div>
+  <div class="section-gap"></div>
+
+  <!-- ═══════════ SECTION 5 — WHY RIBBON FITS ═══════════ -->
+  <div id="section-5">
+    <p class="section-label">Why Ribbon Fits</p>
+
+    <div class="ribbon-logo" style="margin-bottom:16px;">
+      <svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="17" cy="16" r="14" fill="#7C5CFC"/>
+        <ellipse cx="27" cy="28" rx="11" ry="10" fill="#4F28C9"/>
+      </svg>
+      <span class="ribbon-logo-text" style="font-size:18px;">Ribbon</span>
+    </div>
+
+    <p class="body-text">
+      Every role on this list screens the same way. Can you communicate.
+      Can you show up. Can you handle a customer. That is what voice AI
+      does best.
+    </p>
+
+    <p class="body-text" style="margin-bottom:0;">
+      The buyer is not a recruiter. They need the problem handled. Ribbon
+      is live same day. No IT. No onboarding. Sign up Tuesday, screen
+      candidates Wednesday.
+    </p>
+
+    <div class="metric-pills">
+      <span class="metric-pill">60% faster hiring</span>
+      <span class="metric-pill">29 hrs saved per role</span>
+      <span class="metric-pill">98% candidate satisfaction</span>
+    </div>
+  </div>
+
+  <!-- divider -->
+  <div class="section-gap"></div>
+  <div class="divider" style="margin: 0 20px;"></div>
+  <div class="section-gap"></div>
+
+  <!-- ═══════════ SECTION 6 — COMPETITOR ANALYSIS ═══════════ -->
+  <div id="section-6">
+    <p class="section-label">Competitor Analysis</p>
+
+    <div class="accordion-list" data-group="comp">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <svg class="comp-logo" viewBox="0 0 162 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hireology">
+              <g clip-path="url(#hcl)">
+                <path d="M160.493 19.2695V19.4028C159.853 20.8424 159.32 22.3353 158.84 23.8549C157.321 28.1471 155.827 32.4659 154.308 36.7313C154.015 37.5045 153.641 38.2243 153.375 38.9974C152.842 40.4637 151.429 41.4235 149.883 41.3434C149.109 41.3968 148.283 41.3434 147.509 41.3434C147.19 41.3434 147.056 41.2635 147.056 40.9436V38.4375C147.056 38.1177 147.137 37.9844 147.457 38.0377C147.989 38.0643 148.496 38.0377 149.03 37.9577C150.096 37.5578 150.709 36.4381 150.416 35.3184C148.603 30.1732 146.79 25.0812 144.977 19.9359C144.897 19.7227 144.817 19.5361 144.764 19.3228H148.07C149.429 19.3228 149.429 19.3228 149.802 20.6291C150.789 23.9615 151.775 27.2406 152.762 30.6797C152.921 30.5197 153.028 30.3065 153.055 30.0666C153.988 26.6808 154.947 23.3217 155.854 19.9093C155.988 19.5094 156.147 19.3228 156.601 19.3228L160.493 19.2695Z" fill="white"/>
+                <path d="M142.229 19.2162H139.031C138.71 19.2162 138.63 19.3495 138.63 19.6694V21.4022C137.084 18.7363 133.671 17.8566 131.006 19.4028C130.02 19.9893 129.219 20.8424 128.766 21.8821C127.487 24.1748 127.114 26.8674 127.7 29.4001C127.994 31.8528 129.646 33.9055 131.992 34.7053C134.098 35.3985 137.084 35.1585 138.444 32.9458H138.577C138.63 33.8788 138.577 34.7853 138.444 35.6917C138.39 36.6247 137.804 37.4513 136.951 37.8778C135.805 38.3576 134.498 38.3843 133.325 37.9311C132.899 37.7711 132.578 37.4246 132.472 36.998C132.419 36.7581 132.206 36.5981 131.966 36.6247H128.26C127.86 36.6247 127.807 36.7847 127.887 37.1313C128.127 38.5709 129.033 39.8239 130.366 40.4638C132.605 41.4768 135.138 41.7167 137.537 41.1569C139.137 40.9969 140.577 40.1705 141.536 38.8909C142.256 37.7978 142.656 36.5448 142.656 35.2385C142.709 30.0666 142.709 24.868 142.709 19.6428C142.656 19.3495 142.576 19.2162 142.229 19.2162ZM138.124 29.5867C137.431 31.2396 135.511 32.0393 133.859 31.3462C133.671 31.2663 133.512 31.1862 133.352 31.0796C132.845 30.733 132.446 30.2532 132.232 29.6934C131.566 28.0404 131.539 26.201 132.179 24.548C132.578 23.2684 133.805 22.442 135.138 22.5486C136.471 22.4953 137.697 23.3217 138.15 24.6014C138.791 26.201 138.764 27.9871 138.124 29.5867Z" fill="white"/>
+                <path d="M47.1102 34.4114C47.1102 34.8646 46.977 35.0246 46.5237 35.0246C45.4841 34.9712 44.4177 34.9712 43.4046 35.0246C42.8714 35.0246 42.7115 34.9445 42.7115 34.3314C42.7648 31.6122 42.7115 28.8929 42.7648 26.147C42.7648 25.6404 42.6315 25.5338 42.1516 25.5338C39.8056 25.5871 37.5129 25.5871 35.1668 25.5338C34.6337 25.5338 34.5537 25.6938 34.5537 26.2003C34.5537 28.9462 34.5537 31.6654 34.607 34.438C34.607 34.8913 34.4737 35.0512 34.0205 35.0512C32.9008 34.9979 31.8078 34.9979 30.6881 35.0512C30.2882 35.0512 30.1016 34.9712 30.1016 34.518V14.3635C30.1016 13.9103 30.2615 13.777 30.6881 13.8303C31.8078 13.8836 32.9008 13.8836 34.0205 13.8303C34.4737 13.8303 34.6337 13.9636 34.6337 14.4168C34.5803 16.6829 34.6337 18.9756 34.5803 21.2949C34.5803 21.8015 34.7137 21.9615 35.1935 21.9081C37.5396 21.8548 39.8856 21.8548 42.2316 21.9081C42.6848 21.9081 42.8181 21.7748 42.8181 21.3216V14.4168C42.8181 13.9636 42.9514 13.8036 43.4046 13.8036C44.471 13.857 45.5373 13.857 46.6038 13.8036C47.1102 13.8036 47.2702 13.937 47.2169 14.4168C47.1636 17.7493 47.2169 21.135 47.2169 24.4674C47.1102 27.7465 47.1102 31.0789 47.1102 34.4114Z" fill="white"/>
+                <path d="M72.9956 28.3072C74.7285 28.3604 76.4081 28.3072 78.1409 28.3072H83.3665C83.8196 28.3072 83.9529 28.1739 83.9529 27.7206C83.9529 26.9475 83.8993 26.1744 83.8196 25.4279C83.6593 23.5084 82.7264 21.7489 81.2601 20.4959C79.6872 19.2696 77.741 18.6831 75.7415 18.8164C72.4358 18.7631 69.5299 20.9758 68.6768 24.1749C68.1436 26.1211 68.1169 28.1739 68.5968 30.1466C68.97 31.8261 69.9831 33.2658 71.4227 34.1722C74.0087 35.825 77.2612 36.0384 80.0604 34.7587C81.687 34.0656 82.9395 32.7326 83.4991 31.0531C83.6593 30.5465 83.6325 30.3599 83.0461 30.3599C82.14 30.4132 81.2334 30.4132 80.3269 30.3599C79.7138 30.3066 79.2606 30.4132 78.9674 31.0531C78.8341 31.293 78.6208 31.453 78.3809 31.5862C76.6213 32.7593 74.222 32.2794 73.049 30.5198C72.729 30.04 72.5158 29.5068 72.4358 28.9203C72.4624 28.4405 72.5424 28.3072 72.9956 28.3072ZM72.6224 25.108C72.9956 23.1885 74.8618 21.9622 76.7813 22.3354C78.0876 22.602 79.154 23.5884 79.5005 24.8681C79.6605 25.5346 79.6338 25.6145 78.9674 25.6145H73.0756C72.7024 25.5612 72.5691 25.4812 72.6224 25.108Z" fill="white"/>
+                <path d="M124.955 23.8284C124.343 21.7223 122.77 20.0427 120.717 19.2696C119.09 18.7364 117.358 18.6031 115.651 18.8964C113.678 19.1363 111.946 20.2561 110.932 21.9356C108.986 25.0014 108.906 28.8937 110.719 32.0128C111.599 33.719 113.225 34.9187 115.118 35.2652C115.865 35.4252 116.638 35.5052 117.411 35.4786H117.917C120.77 35.6385 123.409 34.0123 124.583 31.3996C125.729 29.027 125.862 26.3077 124.955 23.8284ZM120.636 30.0401C120.13 31.3197 118.85 32.1461 117.464 32.0395C116.052 32.0928 114.771 31.2663 114.265 29.9333C113.892 28.9736 113.732 27.9339 113.759 26.8942C113.678 25.5346 114.158 24.2016 115.038 23.1619C116.451 21.829 118.691 21.9089 119.997 23.3218C120.237 23.5618 120.423 23.8551 120.583 24.1483C121.383 26.0411 121.41 28.1472 120.636 30.0401Z" fill="white"/>
+                <path d="M100.935 23.3482C100.215 21.2688 98.5094 19.6693 96.4029 19.0561C94.6168 18.5496 92.7242 18.5496 90.9381 19.0561C89.8718 19.3227 88.9121 19.8559 88.1386 20.629C86.4054 22.4152 85.4994 24.8145 85.5791 27.2939C85.5791 29.0267 86.0329 30.7062 86.939 32.1992C88.3517 34.4652 90.9381 35.7449 93.6034 35.4783H94.0573C97.0162 35.6382 99.762 33.8787 100.855 31.1061C101.948 28.6535 101.975 25.8276 100.935 23.3482ZM96.616 30.333C95.6034 32.0125 93.444 32.5724 91.7645 31.5593C91.2309 31.2394 90.7779 30.7863 90.4843 30.253C89.418 28.1736 89.5245 25.6943 90.7242 23.7215C91.871 22.1486 94.0573 21.802 95.6302 22.9484C96.0296 23.2416 96.3761 23.6148 96.616 24.0414C97.1227 25.1344 97.3626 26.3341 97.2829 27.5337C97.2829 28.4935 97.043 29.4533 96.616 30.333Z" fill="white"/>
+                <path d="M107.6 34.3316C107.6 34.8648 107.52 35.078 106.934 35.0248C106 34.9714 105.04 34.9714 104.108 35.0248C103.601 35.078 103.441 34.8915 103.441 34.3582C103.494 30.1993 103.441 26.0405 103.441 21.8816V14.3637C103.441 13.9105 103.521 13.6972 104.054 13.6972C105.04 13.7506 106.027 13.7506 107.014 13.6972C107.467 13.6972 107.627 13.8305 107.627 14.2837C107.573 17.6162 107.627 21.0019 107.627 24.3343C107.6 27.6934 107.6 30.9992 107.6 34.3316Z" fill="white"/>
+                <path d="M67.1844 22.7617C67.1844 23.0816 67.0511 23.1616 66.7313 23.1616C66.0647 23.0816 65.3983 23.1083 64.7318 23.2149C63.1056 23.5082 61.9859 25.0011 62.1724 26.6273C62.0925 29.1866 62.1192 31.6926 62.1192 34.2519C62.1192 35.0783 62.1192 35.0783 61.2927 35.0783H58.4668C58.1469 35.0783 57.9336 35.025 57.9336 34.6251V19.8025C57.9336 19.4826 58.0136 19.296 58.3869 19.3493H61.4793C61.7726 19.3493 61.8792 19.4293 61.8792 19.7492V21.802C61.9325 21.802 61.9592 21.8552 62.0125 21.8552C62.2258 21.5354 62.4657 21.1888 62.679 20.8689C63.5854 19.5359 65.1584 18.8161 66.7579 18.976C67.0511 18.976 67.1578 19.1093 67.1578 19.376C67.1844 20.469 67.1844 21.6153 67.1844 22.7617Z" fill="white"/>
+                <path d="M54.6817 34.3318C54.6817 34.9183 54.5217 35.025 53.9885 35.025C53.0021 34.9717 52.0157 34.9717 51.0293 35.025C50.6561 35.025 50.4961 34.945 50.4961 34.5185V19.7492C50.4961 19.3492 50.6561 19.2426 51.0026 19.2426C52.0423 19.2426 53.1088 19.296 54.1218 19.2426C54.575 19.2426 54.655 19.4026 54.655 19.8291V27.1071C54.6817 29.5065 54.6283 31.9325 54.6817 34.3318Z" fill="white"/>
+                <path d="M54.6809 16.9499C54.6809 17.3231 54.5476 17.4031 54.1744 17.4031H50.9219C50.6021 17.4031 50.4688 17.3231 50.4688 17.0032V13.9907C50.4688 13.6708 50.6021 13.5908 50.8687 13.6175H54.2277C54.5476 13.6175 54.6809 13.6975 54.6809 14.0173C54.6276 14.9772 54.6276 15.9635 54.6809 16.9499Z" fill="white"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M25.2249 36.3841C25.998 37.4505 26.4779 38.7035 26.6112 40.0365C26.7711 42.3825 25.6781 43.5289 23.3321 43.5555H3.71078C2.27117 43.7421 0.911536 42.7824 0.618284 41.3695C0.484987 40.543 0.538306 39.6899 0.77824 38.8901C1.07149 38.0103 1.47139 37.1839 1.97791 36.4108C4.24396 32.9184 6.51001 29.4794 8.85606 25.9603C9.17595 25.5071 9.33593 24.9739 9.30925 24.4408C9.27371 22.9113 9.28558 21.3699 9.29746 19.8326C9.30331 19.0654 9.30925 18.2992 9.30925 17.536C9.30925 17.1094 9.2559 16.6562 9.17595 16.2297C9.04264 15.6964 8.80271 15.2965 8.13626 15.2965C7.94962 15.2965 7.78966 15.2433 7.6297 15.1632C7.33645 15.0566 7.14984 14.79 7.12317 14.4968C7.14984 14.1769 7.33645 13.9103 7.6297 13.8303C7.8963 13.7236 8.18954 13.6703 8.48282 13.6703H18.88C19.5998 13.6703 20.1596 13.937 20.1063 14.4434C20.053 15.0833 19.5198 15.1632 18.9866 15.2166C18.5334 15.2699 18.1602 15.5898 18.0802 16.043C17.9469 16.6295 17.8936 17.1894 17.9469 17.7759V24.6007C17.9203 25.0006 18.0269 25.4005 18.2668 25.7204C18.9011 26.6902 19.5375 27.6599 20.1742 28.6302C21.8655 31.2076 23.5593 33.7888 25.2249 36.3841ZM15.7075 37.9304C16.314 36.964 16.9205 35.9976 17.5203 35.0245C17.7069 34.7046 17.787 34.3314 17.7336 33.9581C17.5015 32.8452 17.2693 31.7287 17.0367 30.6101C16.3612 27.3612 15.6818 24.094 14.9877 20.8417C14.801 20.2819 14.9078 19.6687 15.2276 19.1888C15.6716 18.4715 16.0829 17.7434 16.4963 17.0112C16.7282 16.6005 16.9608 16.1884 17.2005 15.7764C17.4004 15.4492 17.4268 15.2831 17.2374 15.2106C17.155 15.157 17.0031 15.1366 16.7736 15.1366H13.5212C13.1568 15.1366 12.7895 15.1336 12.4222 15.1307C11.6876 15.1248 10.953 15.1188 10.2421 15.1366C9.88778 15.1366 9.73633 15.1793 9.74723 15.3391C9.74203 15.4325 9.804 15.5718 9.92242 15.7764C10.162 16.1884 10.3946 16.6005 10.6265 17.0112C11.0399 17.7434 11.4512 18.4715 11.8952 19.1888C12.1024 19.5342 12.2089 19.9131 12.2149 20.2966C12.2155 20.4963 12.1889 20.6972 12.1349 20.895C11.6197 23.2796 11.1208 25.6722 10.6202 28.073C10.2141 30.0205 9.80685 31.9733 9.38896 33.9315C9.35398 34.054 9.3391 34.1766 9.34146 34.2963C9.34105 34.551 9.4193 34.7938 9.54919 34.9978C10.7755 36.9173 12.0019 38.8634 13.2015 40.8362C13.4415 41.2894 13.6547 41.2362 13.8947 40.8362C14.4945 39.8632 15.101 38.8968 15.7075 37.9304Z" fill="#80C926"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 10.0449C8.75 8.55193 9.97634 7.32562 11.4693 7.32562C12.9888 7.32562 14.1885 8.55193 14.1619 10.0182V10.2049C14.1352 11.6445 12.9356 12.7908 11.496 12.7375H11.3893C9.92307 12.7375 8.75 11.5378 8.75 10.0716V10.0449Z" fill="#80C926"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2818 2.82018C11.2551 1.54053 12.2681 0.447497 13.5745 0.420837H13.6811C14.9874 0.447497 16.0005 1.51387 15.9738 2.82018C15.9471 4.12649 14.8808 5.13955 13.5745 5.11289C12.3214 5.08623 11.3084 4.07317 11.2818 2.82018Z" fill="#80C926"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.707 7.51241C15.7604 6.73929 16.4268 6.12612 17.2 6.17944C17.2533 6.17944 17.2799 6.17944 17.3066 6.23276C18.0531 6.28607 18.6129 6.95255 18.533 7.69902C18.5063 8.47217 17.8664 9.08534 17.0934 9.08534C16.3202 9.03199 15.707 8.36554 15.707 7.59239V7.51241Z" fill="#80C926"/>
+              </g>
+              <defs><clipPath id="hcl"><rect width="161.04" height="43.92" fill="white" transform="translate(0 0.039978)"/></clipPath></defs>
+            </svg>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            The only software built specifically for automotive hiring. Covers
+            job postings, applicant tracking, onboarding, and payroll
+            integration. Built for dealer groups with existing HR infrastructure
+            and time to implement a full platform. Most smaller dealers are not
+            that. They need screening handled this week, not a six week
+            onboarding process.
+            <div class="win-line">
+              Ribbon wins: Faster to start, cheaper to run, does the one thing
+              they actually need.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">
+          <div class="accordion-trigger-inner">
+            <img
+              class="comp-logo"
+              src="https://applicantpro.com/wp-content/themes/applicantpro/images/logo.png"
+              alt="ApplicantPro"
+              style="filter: brightness(0) invert(1);"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div style="display:none; align-items:center; gap:6px;">
+              <div style="background:#FF6B35; border-radius:5px; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; flex-shrink:0;">AP</div>
+              <span style="font-size:15px; font-weight:600; color:white;">ApplicantPro</span>
+            </div>
+          </div>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            General ATS used across industries including some dealerships.
+            Tracks applications and manages job postings. No AI screening, no
+            voice interviews, no automated candidate outreach. Still requires a
+            human to call every applicant manually.
+            <div class="win-line">
+              Ribbon wins: Replaces the manual calling entirely. ApplicantPro
+              organises the inbox, it does not empty it.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <div id="footer">
+    <div class="divider"></div>
+    <div class="footer-logo-wrap">
+      <div class="ribbon-logo" style="justify-content:center; opacity:0.5;">
+        <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="17" cy="16" r="14" fill="#7C5CFC"/>
+          <ellipse cx="27" cy="28" rx="11" ry="10" fill="#4F28C9"/>
+        </svg>
+        <span class="ribbon-logo-text" style="font-size:14px;">Ribbon</span>
+      </div>
+    </div>
+    <p class="footer-text">
+      Spec GTM Deliverable — Built by Ryan for Ribbon.ai<br />
+      2026
+    </p>
+  </div>
+
+</div><!-- /shell -->
+
+<script>
+  // ── Accordion ──────────────────────────────────────────────
+  document.querySelectorAll('.accordion-list').forEach(function(list) {
+    list.querySelectorAll('.accordion-trigger').forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var item = this.closest('.accordion-item');
+        var isOpen = item.classList.contains('open');
+
+        // Close all in this group
+        list.querySelectorAll('.accordion-item').forEach(function(i) {
+          i.classList.remove('open');
+          i.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+        });
+
+        // If it wasn't open, open it
+        if (!isOpen) {
+          item.classList.add('open');
+          this.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
